@@ -55,4 +55,5 @@ double overlapShells(struct plankbase *Molecule, std::uint32_t bIndex1, std::uin
 	std::vector <double> coeffs2 = Molecule->gtoCoeffcients[bIndex2];
 	std::vector <double> expnts1 = Molecule->gtoExponents[bIndex1];
 	std::vector <double> expnts2 = Molecule->gtoExponents[bIndex2];
+	return 0;
 }
