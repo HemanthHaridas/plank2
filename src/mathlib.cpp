@@ -9,7 +9,7 @@ std::uint64_t combination(std::uint32_t input1, std::uint32_t input2) {
 	if ( input1 < input2 ) return 0;
 
 	std::uint64_t numerator   = 1;
-	for (std::uint64_t number = input1; input1 > input1-input2; input1--) {
+	for (std::uint64_t number = input1; number > input1-input2; number--) {
 		numerator = numerator * number;
 	}
 
