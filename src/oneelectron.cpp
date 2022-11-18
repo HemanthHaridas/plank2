@@ -10,7 +10,10 @@
 
 
 // Function to calculate the center of two primitive gaussian functions.
-//
+// This function calculates the center of two primitive gaussian functions
+// in cartesian space (x, y and z) coordinates indepentantly, and returns
+// an array containing the center.
+
 void gCenter(std::vector <double> cntr1, double expnt1, std::vector <double> cntr2, double expnt2, double *gcntr) {
 	double aux1, aux2;
 	for (std::uint32_t index = 0; index < 3; index++) {
@@ -18,8 +21,12 @@ void gCenter(std::vector <double> cntr1, double expnt1, std::vector <double> cnt
 		aux2 = expnt1 + expnt2;
 		gcntr[index] = (aux1/aux2);
 	}
-//	std::cout << gcntr[0] << "\t" << gcntr[1] << "\t" << gcntr[2] << "\n";
 }
+
+// Function to calculate the overlap between two primitive gaussian functions.
+// This function calculates the overlap between two primitive gaussian functions
+// in cartesian space (x, y and z coordinates) indepentantly, and returns an
+// array containing the integrals
 
 void gIntegral(std::vector <double> cntr1, double expnt1, std::vector <double> cntr2, double expnt2, double *gint) {
 	double aux1, aux2;
@@ -30,6 +37,10 @@ void gIntegral(std::vector <double> cntr1, double expnt1, std::vector <double> c
 		gint[index] = aux2;
 	}
 }
+
+// Function to calculate the overlap between two primitve gaussian functions of 
+// arbitrary angular momentum. This function calculates the overlap between two
+// gaussian type orbitals and returns the overlap in a single direction.
 
 double overlapGTO(double cntr1, double expnt1, std::uint32_t shl1, double cntr2, double expnt2, std::uint32_t shl2, double gcntr) {
 	double t_overlap = 0.0;
@@ -50,6 +61,11 @@ double overlapGTO(double cntr1, double expnt1, std::uint32_t shl1, double cntr2,
 	return t_overlap;
 }
 
+// Function to calculate the overlap between two contracted gaussian type orbitals.
+// This function calculates the overlap between pairs of two primitive gaussian type
+// orbitals in two distinct contracted gaussian type orbitals, and returns the overlap
+// in 3D space.
+
 double overlapShells(struct plankbase *Molecule, std::uint32_t bIndex1, std::uint32_t bIndex2) {
 	// data for first basis
 	std::vector <double> center1 	= Molecule->gtoCenters[bIndex1];
@@ -65,12 +81,11 @@ double overlapShells(struct plankbase *Molecule, std::uint32_t bIndex1, std::uin
 	std::vector <double> normcoeff2	= Molecule->gtoNormcoeffs[bIndex2];
 	std::vector <int> shell2	= Molecule->gtoShells[bIndex2];
 
+	// number of primitive gaussians in each contracted gaussians
 	std::uint32_t nexpnts1 = expnts1.size();
 	std::uint32_t nexpnts2 = expnts2.size();
 	
-	double tmp;
 	double overlap = 0.0;
-
 	double gcenter[3];
 	double gintegral[3];
 
@@ -90,7 +105,6 @@ double overlapShells(struct plankbase *Molecule, std::uint32_t bIndex1, std::uin
 			toverlap = coeffs2[c2] * normcoeff2[c2] * toverlap;
 			prefact  = pow(pi/(expnts1[c1] + expnts2[c2]), 1.5);
 			overlap  = (toverlap * prefact) + overlap;
-//			std::cout << std::setprecision(3) << overlap << "\n";
 		}
 	}
 	return overlap;
